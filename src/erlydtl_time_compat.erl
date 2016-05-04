@@ -1,8 +1,8 @@
 %%
 %% %CopyrightBegin%
-%% 
+%%
 %% Copyright Ericsson AB 2014-2015. All Rights Reserved.
-%% 
+%%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
 %% You may obtain a copy of the License at
@@ -14,7 +14,7 @@
 %% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
-%% 
+%%
 %% %CopyrightEnd%
 %%
 
@@ -186,7 +186,7 @@ unique_integer() ->
 	erlang:unique_integer()
     catch
 	error:undef ->
-	    {MS, S, US} = erlang:now(),
+	    {MS, S, US} = otp_utils:get_current_time(),
 	    (MS*1000000+S)*1000000+US
     end.
 
@@ -203,7 +203,7 @@ unique_integer(Modifiers) ->
 		    %% fullfill the requirements of
 		    %% all modifiers: unique, positive,
 		    %% and monotonic...
-		    {MS, S, US} = erlang:now(),
+		    {MS, S, US} = otp_utils:get_current_time(),
 		    (MS*1000000+S)*1000000+US;
 		false ->
 		    erlang:error(badarg, [Modifiers])
@@ -281,7 +281,7 @@ integer_time_unit(I) when is_integer(I), I > 0 -> I;
 integer_time_unit(BadRes) -> erlang:error(bad_time_unit, [BadRes]).
 
 erlang_system_time_fallback() ->
-    {MS, S, US} = erlang:now(),
+    {MS, S, US} = otp_utils:get_current_time(),
     (MS*1000000+S)*1000000+US.
 
 os_system_time_fallback() ->
