@@ -186,7 +186,7 @@ unique_integer() ->
 	erlang:unique_integer()
     catch
 	error:undef ->
-	    {MS, S, US} = otp_utils:get_current_time(),
+	    {MS, S, US} = erlang:timestamp(),
 	    (MS*1000000+S)*1000000+US
     end.
 
@@ -203,7 +203,7 @@ unique_integer(Modifiers) ->
 		    %% fullfill the requirements of
 		    %% all modifiers: unique, positive,
 		    %% and monotonic...
-		    {MS, S, US} = otp_utils:get_current_time(),
+		    {MS, S, US} = erlang:timestamp(),
 		    (MS*1000000+S)*1000000+US;
 		false ->
 		    erlang:error(badarg, [Modifiers])
@@ -281,7 +281,7 @@ integer_time_unit(I) when is_integer(I), I > 0 -> I;
 integer_time_unit(BadRes) -> erlang:error(bad_time_unit, [BadRes]).
 
 erlang_system_time_fallback() ->
-    {MS, S, US} = otp_utils:get_current_time(),
+    {MS, S, US} = erlang:timestamp(),
     (MS*1000000+S)*1000000+US.
 
 os_system_time_fallback() ->
